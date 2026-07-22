@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 10; }
+      .wire { fill: none; stroke: #0f172a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .wire2 { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .tap { fill: #2563eb; stroke: #1e3a8a; stroke-width: 2; }
+      .node { fill: #0f172a; }
+      .res { fill: #fef3c7; stroke: #92400e; stroke-width: 2; rx: 4; }
+      .cap { stroke: #7c3aed; stroke-width: 3; }
+      .small { font: 16px Arial, sans-serif; fill: #334155; }
+      .label { font: 20px Arial, sans-serif; fill: #0f172a; font-weight: 700; }
+      .pin { font: 16px Arial, sans-serif; fill: #0f172a; font-weight: 700; }
+      .note { font: 15px Arial, sans-serif; fill: #475569; }
+      .title { font: 30px Arial, sans-serif; fill: #0f172a; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="780"/>
+  <text class="title" x="48" y="52">8-position rotary switch using one ADC resistor ladder</text>
+  <text class="note" x="48" y="82">Build this once per 8-position switch. The switch selects one ladder tap voltage and sends it to one Pico ADC pin.</text>
+
+  <!-- Pico -->
+  <rect class="panel" x="52" y="160" width="250" height="360"/>
+  <text class="label" x="122" y="200">Raspberry Pi Pico</text>
+  <rect class="res" x="86" y="242" width="88" height="34"/>
+  <text class="pin" x="109" y="265">3V3</text>
+  <rect class="res" x="86" y="330" width="120" height="34"/>
+  <text class="pin" x="105" y="353">GP26 ADC0</text>
+  <rect class="res" x="86" y="452" width="88" height="34"/>
+  <text class="pin" x="110" y="475">GND</text>
+  <text class="note" x="72" y="562">Use GP27/ADC1 for the second switch.</text>
+  <text class="note" x="72" y="586">GP28/ADC2 remains spare for future use.</text>
+
+  <!-- Ladder board -->
+  <rect class="panel" x="422" y="118" width="270" height="570"/>
+  <text class="label" x="485" y="154">Resistor ladder</text>
+  <text class="note" x="466" y="178">9x 10k, 1%</text>
+
+  <!-- Ladder vertical bus -->
+  <path class="wire" d="M558 218 L558 617"/>
+  <circle class="node" cx="558" cy="218" r="5"/>
+  <circle class="node" cx="558" cy="617" r="5"/>
+  <text class="pin" x="524" y="210">3V3</text>
+  <text class="pin" x="528" y="652">GND</text>
+
+  <!-- Resistors as blocks down ladder -->
+  <g>
+    <rect class="res" x="522" y="230" width="72" height="24"/><text class="small" x="541" y="248">10k</text>
+    <rect class="res" x="522" y="276" width="72" height="24"/><text class="small" x="541" y="294">10k</text>
+    <rect class="res" x="522" y="322" width="72" height="24"/><text class="small" x="541" y="340">10k</text>
+    <rect class="res" x="522" y="368" width="72" height="24"/><text class="small" x="541" y="386">10k</text>
+    <rect class="res" x="522" y="414" width="72" height="24"/><text class="small" x="541" y="432">10k</text>
+    <rect class="res" x="522" y="460" width="72" height="24"/><text class="small" x="541" y="478">10k</text>
+    <rect class="res" x="522" y="506" width="72" height="24"/><text class="small" x="541" y="524">10k</text>
+    <rect class="res" x="522" y="552" width="72" height="24"/><text class="small" x="541" y="570">10k</text>
+    <rect class="res" x="522" y="598" width="72" height="24"/><text class="small" x="541" y="616">10k</text>
+  </g>
+
+  <!-- Power wires -->
+  <path class="wire" d="M174 259 C300 259 300 218 558 218"/>
+  <path class="wire" d="M174 469 C330 469 330 617 558 617"/>
+
+  <!-- Rotary switch -->
+  <rect class="panel" x="832" y="160" width="300" height="420"/>
+  <text class="label" x="880" y="200">8-position rotary switch</text>
+  <circle cx="982" cy="390" r="95" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+  <circle cx="982" cy="390" r="12" class="node"/>
+  <text class="pin" x="1010" y="396">COM / wiper</text>
+
+  <!-- Switch throws -->
+  <g>
+    <circle class="tap" cx="982" cy="270" r="8"/><text class="small" x="970" y="252">8</text>
+    <circle class="tap" cx="1067" cy="305" r="8"/><text class="small" x="1080" y="308">7</text>
+    <circle class="tap" cx="1102" cy="390" r="8"/><text class="small" x="1118" y="395">6</text>
+    <circle class="tap" cx="1067" cy="475" r="8"/><text class="small" x="1080" y="485">5</text>
+    <circle class="tap" cx="982" cy="510" r="8"/><text class="small" x="978" y="535">4</text>
+    <circle class="tap" cx="897" cy="475" r="8"/><text class="small" x="870" y="485">3</text>
+    <circle class="tap" cx="862" cy="390" r="8"/><text class="small" x="835" y="395">2</text>
+    <circle class="tap" cx="897" cy="305" r="8"/><text class="small" x="870" y="308">1</text>
+  </g>
+  <path class="wire2" d="M982 390 L897 305"/>
+  <text class="note" x="860" y="612">Only one throw connects to COM at a time.</text>
+
+  <!-- Tap wires from ladder to switch throws -->
+  <g>
+    <circle class="tap" cx="558" cy="265" r="6"/><path class="wire2" d="M558 265 C715 248 778 248 982 270"/><text class="small" x="610" y="257">tap 8 ~2.93V</text>
+    <circle class="tap" cx="558" cy="311" r="6"/><path class="wire2" d="M558 311 C720 292 800 286 1067 305"/><text class="small" x="610" y="303">tap 7 ~2.57V</text>
+    <circle class="tap" cx="558" cy="357" r="6"/><path class="wire2" d="M558 357 C730 344 825 350 1102 390"/><text class="small" x="610" y="349">tap 6 ~2.20V</text>
+    <circle class="tap" cx="558" cy="403" r="6"/><path class="wire2" d="M558 403 C730 410 825 432 1067 475"/><text class="small" x="610" y="395">tap 5 ~1.83V</text>
+    <circle class="tap" cx="558" cy="449" r="6"/><path class="wire2" d="M558 449 C720 474 805 506 982 510"/><text class="small" x="610" y="441">tap 4 ~1.47V</text>
+    <circle class="tap" cx="558" cy="495" r="6"/><path class="wire2" d="M558 495 C695 515 775 510 897 475"/><text class="small" x="610" y="487">tap 3 ~1.10V</text>
+    <circle class="tap" cx="558" cy="541" r="6"/><path class="wire2" d="M558 541 C690 544 760 500 862 390"/><text class="small" x="610" y="533">tap 2 ~0.73V</text>
+    <circle class="tap" cx="558" cy="587" r="6"/><path class="wire2" d="M558 587 C682 578 742 455 897 305"/><text class="small" x="610" y="579">tap 1 ~0.37V</text>
+  </g>
+
+  <!-- ADC output with series resistor, cap, optional pulldown -->
+  <path class="wire" d="M982 390 C820 662 445 662 326 347"/>
+  <rect class="res" x="325" y="330" width="62" height="34"/>
+  <text class="small" x="343" y="353">1k</text>
+  <path class="wire" d="M325 347 L206 347"/>
+
+  <!-- Cap at ADC side -->
+  <path class="wire" d="M260 347 L260 420"/>
+  <line class="cap" x1="238" y1="420" x2="282" y2="420"/>
+  <line class="cap" x1="238" y1="436" x2="282" y2="436"/>
+  <path class="wire" d="M260 436 L260 469"/>
+  <text class="small" x="282" y="432">100nF</text>
+
+  <!-- Optional pulldown -->
+  <path class="wire" d="M292 347 L292 400"/>
+  <rect class="res" x="262" y="400" width="60" height="28"/>
+  <text class="small" x="276" y="420">1M</text>
+  <path class="wire" d="M292 428 L292 469"/>
+  <text class="note" x="314" y="417">optional pulldown</text>
+
+  <text class="note" x="48" y="728">The resistor ladder terminals go to the 8 outside switch throws. The center/common switch terminal goes to the Pico ADC input.</text>
+</svg>

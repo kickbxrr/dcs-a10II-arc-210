@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1040" viewBox="0 0 1480 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Complete Raspberry Pi Pico wiring allocation for ARC-210 controller</title>
+  <desc id="desc">A Raspberry Pi Pico connects by I2C to an MCP23017 for fourteen push buttons, directly reads seven encoders, reads two selector resistor ladders through ADC pins, leaves GP28 spare, and reserves pins for a future SPI display.</desc>
+  <style>
+    .bg { fill: #f7f9fc; }
+    .pico { fill: #eaf3ff; stroke: #205a92; stroke-width: 2.5; rx: 12; }
+    .box { fill: #ffffff; stroke: #2d4055; stroke-width: 2; rx: 10; }
+    .reserve { fill: #f1f2f7; stroke: #5b6575; stroke-width: 2; stroke-dasharray: 7 5; rx: 10; }
+    .note { fill: #fff8e0; stroke: #a46a00; stroke-width: 1.5; rx: 8; }
+    .wire { fill: none; stroke: #25364d; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .i2c { fill: none; stroke: #087d68; stroke-width: 3; stroke-linecap: round; }
+    .analog { fill: none; stroke: #7a3fb4; stroke-width: 3; stroke-linecap: round; }
+    .power { fill: none; stroke: #bd3232; stroke-width: 3; stroke-linecap: round; }
+    .ground { fill: none; stroke: #3e3e3e; stroke-width: 3; stroke-linecap: round; }
+    .title { font: bold 28px Arial, sans-serif; fill: #172534; }
+    .heading { font: bold 20px Arial, sans-serif; fill: #172534; }
+    .pin { font: bold 14px Arial, sans-serif; fill: #172534; }
+    .label { font: 15px Arial, sans-serif; fill: #172534; }
+    .small { font: 13px Arial, sans-serif; fill: #4a5e73; }
+  </style>
+  <rect class="bg" width="1480" height="1040"/>
+  <text class="title" x="40" y="43">ARC-210 controller: complete Raspberry Pi Pico pin allocation</text>
+  <text class="label" x="40" y="69">Run all logic at 3.3 V. Encoder commons and all button returns share GND. The display block is a future reservation.</text>
+
+  <rect class="pico" x="562" y="110" width="350" height="670"/>
+  <text class="heading" x="643" y="148">Raspberry Pi Pico</text>
+  <text class="small" x="618" y="171">GPIO labels include physical header pins.</text>
+
+  <text class="pin" x="590" y="225">GP0 (1) / GP1 (2)</text><text class="small" x="790" y="225">Encoder 1 A/B</text>
+  <text class="pin" x="590" y="260">GP2 (4) / GP3 (5)</text><text class="small" x="790" y="260">Encoder 2 A/B</text>
+  <text class="pin" x="590" y="310">GP4 (6)</text><text class="small" x="790" y="310">I2C SDA</text>
+  <text class="pin" x="590" y="340">GP5 (7)</text><text class="small" x="790" y="340">I2C SCL</text>
+  <text class="pin" x="590" y="390">GP6 (9) / GP7 (10)</text><text class="small" x="790" y="390">Encoder 3 A/B</text>
+  <text class="pin" x="590" y="425">GP8 (11) / GP9 (12)</text><text class="small" x="790" y="425">Encoder 4 A/B</text>
+  <text class="pin" x="590" y="460">GP10 (14) / GP11 (15)</text><text class="small" x="790" y="460">Encoder 5 A/B</text>
+  <text class="pin" x="590" y="495">GP12 (16) / GP13 (17)</text><text class="small" x="790" y="495">Encoder 6 A/B</text>
+  <text class="pin" x="590" y="545">GP14 (19) / GP15 (20)</text><text class="small" x="790" y="545">Encoder 7 A/B</text>
+  <text class="pin" x="590" y="600">GP16-22 (21,22,24-29)</text><text class="small" x="790" y="600">future SPI display</text>
+  <text class="pin" x="590" y="660">GP26 / ADC0 (31)</text><text class="small" x="790" y="660">Selector 1</text>
+  <text class="pin" x="590" y="695">GP27 / ADC1 (32)</text><text class="small" x="790" y="695">Selector 2</text>
+  <text class="pin" x="590" y="730">GP28 / ADC2 (34)</text><text class="small" x="790" y="730">spare GPIO / ADC</text>
+  <text class="pin" x="590" y="765">3V3 OUT (36), GND (23)</text>
+
+  <rect class="box" x="70" y="210" width="330" height="280"/>
+  <text class="heading" x="140" y="250">Waveshare MCP23017</text>
+  <text class="label" x="108" y="285">VCC &lt;- Pico 3V3 OUT (36)</text>
+  <text class="label" x="108" y="315">GND &lt;- Pico GND (23)</text>
+  <text class="label" x="108" y="345">SDA &lt;- Pico GP4 (6)</text>
+  <text class="label" x="108" y="375">SCL &lt;- Pico GP5 (7)</text>
+  <text class="label" x="108" y="420">GPA0-GPA7: Buttons 1-8</text>
+  <text class="label" x="108" y="448">GPB0-GPB5: Buttons 9-14</text>
+  <text class="small" x="108" y="472">GPB6-GPB7 are spare. Use internal pull-ups.</text>
+  <path class="power" d="M562 758 H445 V285 H400"/>
+  <path class="ground" d="M562 772 H470 V315 H400"/>
+  <path class="i2c" d="M562 304 H450 V345 H400"/>
+  <path class="i2c" d="M562 334 H435 V375 H400"/>
+  <text class="small" x="458" y="334">SDA</text><text class="small" x="446" y="367">SCL</text>
+
+  <rect class="box" x="1020" y="130" width="380" height="430"/>
+  <text class="heading" x="1115" y="168">Seven rotary encoders</text>
+  <text class="small" x="1080" y="192">Each: common -> shared GND; A/B -> Pico GPIO.</text>
+  <text class="label" x="1060" y="236">Encoder 1: A GP0, B GP1</text>
+  <text class="label" x="1060" y="280">Encoder 2: A GP2, B GP3</text>
+  <text class="label" x="1060" y="324">Encoder 3: A GP6, B GP7</text>
+  <text class="label" x="1060" y="368">Encoder 4: A GP8, B GP9</text>
+  <text class="label" x="1060" y="412">Encoder 5: A GP10, B GP11</text>
+  <text class="label" x="1060" y="456">Encoder 6: A GP12, B GP13</text>
+  <text class="label" x="1060" y="500">Encoder 7: A GP14, B GP15</text>
+  <text class="label" x="1050" y="528">No encoder push-button connections are used.</text>
+  <text class="small" x="1050" y="550">Firmware enables Pico internal pull-ups on all A/B pins.</text>
+  <path class="wire" d="M912 220 H1020"/><path class="wire" d="M912 255 H1020"/>
+  <path class="wire" d="M912 390 H1020"/><path class="wire" d="M912 425 H1020"/>
+  <path class="wire" d="M912 460 H1020"/><path class="wire" d="M912 495 H1020"/>
+  <path class="wire" d="M912 545 H1020"/>
+
+  <rect class="reserve" x="1015" y="640" width="385" height="235"/>
+  <text class="heading" x="1120" y="680">Future SPI display</text>
+  <text class="label" x="1050" y="720">GP16: MISO, optional</text>
+  <text class="label" x="1050" y="748">GP17: CS</text>
+  <text class="label" x="1050" y="776">GP18: SCK; GP19: MOSI</text>
+  <text class="label" x="1050" y="804">GP20: DC; GP21: RST; GP22: backlight PWM</text>
+  <text class="small" x="1050" y="838">No display wiring or code is needed in the first build.</text>
+  <path class="wire" d="M912 600 H1015"/>
+
+  <rect class="box" x="55" y="640" width="385" height="280"/>
+  <text class="heading" x="115" y="680">Selector analog controls</text>
+  <text class="label" x="88" y="724">Selector 1 resistor ladder wiper -> GP26 / ADC0</text>
+  <text class="label" x="88" y="764">Selector 2 resistor ladder wiper -> GP27 / ADC1</text>
+  <text class="label" x="88" y="804">GP28 / ADC2 remains spare for future use</text>
+  <text class="small" x="88" y="830">Each selector wiper uses a 1K series resistor.</text>
+  <text class="small" x="88" y="855">Add 100nF from the ADC side to GND.</text>
+  <text class="small" x="88" y="880">Each ladder spans 3V3 OUT to GND.</text>
+  <path class="analog" d="M562 655 H440 V724"/>
+  <path class="analog" d="M562 690 H420 V764"/>
+
+  <rect class="note" x="510" y="875" width="465" height="102"/>
+  <text class="label" x="534" y="907">USB HID allocation in the initial sketch:</text>
+  <text class="small" x="534" y="933">Buttons 1-14: MCP push buttons; 15-28: encoder directions;</text>
+  <text class="small" x="534" y="954">29-32: selector next/previous pulses; no analog control assigned.</text>
+</svg>

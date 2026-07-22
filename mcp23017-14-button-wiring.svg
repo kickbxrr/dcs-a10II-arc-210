@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="980" viewBox="0 0 1280 980" role="img" aria-labelledby="title desc">
+  <title id="title">Raspberry Pi Pico and MCP23017 wiring for fourteen push buttons</title>
+  <desc id="desc">The Pico supplies 3.3 volts, ground, and an I2C connection to an MCP23017. Fourteen normally-open buttons connect MCP pins to ground. An optional interrupt line connects the MCP23017 to a spare Pico GPIO.</desc>
+  <style>
+    .bg { fill: #f7f9fc; }
+    .panel { fill: #ffffff; stroke: #25364d; stroke-width: 2; rx: 12; }
+    .chip { fill: #e9f2ff; stroke: #25578c; stroke-width: 2; rx: 12; }
+    .note { fill: #fff8e1; stroke: #a66a00; stroke-width: 1.5; rx: 8; }
+    .wire { fill: none; stroke: #25364d; stroke-width: 2.5; }
+    .power { fill: none; stroke: #bd3232; stroke-width: 3; }
+    .ground { fill: none; stroke: #444444; stroke-width: 3; }
+    .i2c { fill: none; stroke: #087d68; stroke-width: 3; }
+    .optional { fill: none; stroke: #a66a00; stroke-width: 2.5; stroke-dasharray: 7 6; }
+    .buttonwire { fill: none; stroke: #4b6380; stroke-width: 2; }
+    .label { font: 16px Arial, sans-serif; fill: #182536; }
+    .small { font: 13px Arial, sans-serif; fill: #182536; }
+    .heading { font: bold 24px Arial, sans-serif; fill: #182536; }
+    .pin { font: bold 14px Arial, sans-serif; fill: #182536; }
+    .muted { font: 13px Arial, sans-serif; fill: #4f6074; }
+  </style>
+  <rect class="bg" width="1280" height="980"/>
+  <text class="heading" x="48" y="46">14 push buttons through one MCP23017</text>
+  <text class="label" x="48" y="74">Run the MCP23017 at 3.3 V. Configure its inputs with internal pull-ups: unpressed = HIGH, pressed = LOW.</text>
+
+  <rect class="panel" x="48" y="154" width="250" height="560"/>
+  <text class="heading" x="83" y="195">Raspberry Pi Pico</text>
+  <text class="muted" x="83" y="220">Exact GPIO choices are flexible</text>
+  <text class="pin" x="83" y="282">3V3(OUT)</text>
+  <text class="pin" x="83" y="334">GND</text>
+  <text class="pin" x="83" y="422">I2C SDA (example GP4)</text>
+  <text class="pin" x="83" y="474">I2C SCL (example GP5)</text>
+  <text class="pin" x="83" y="562">Optional interrupt GPIO</text>
+  <text class="muted" x="83" y="586">e.g. GP6; omit for polling</text>
+  <circle cx="280" cy="276" r="5" fill="#bd3232"/>
+  <circle cx="280" cy="328" r="5" fill="#444444"/>
+  <circle cx="280" cy="416" r="5" fill="#087d68"/>
+  <circle cx="280" cy="468" r="5" fill="#087d68"/>
+  <circle cx="280" cy="556" r="5" fill="#a66a00"/>
+
+  <rect class="chip" x="470" y="138" width="300" height="600"/>
+  <text class="heading" x="541" y="180">MCP23017</text>
+  <text class="muted" x="536" y="204">I2C address: 0x20 example</text>
+  <text class="pin" x="494" y="276">VCC</text>
+  <text class="pin" x="494" y="328">GND</text>
+  <text class="pin" x="494" y="416">SDA</text>
+  <text class="pin" x="494" y="468">SCL</text>
+  <text class="pin" x="494" y="556">INTA / INTB</text>
+  <circle cx="480" cy="276" r="5" fill="#bd3232"/>
+  <circle cx="480" cy="328" r="5" fill="#444444"/>
+  <circle cx="480" cy="416" r="5" fill="#087d68"/>
+  <circle cx="480" cy="468" r="5" fill="#087d68"/>
+  <circle cx="480" cy="556" r="5" fill="#a66a00"/>
+  <text class="small" x="496" y="642">A0/A1/A2 set the I2C address.</text>
+  <text class="small" x="496" y="664">Tie them as required by the board.</text>
+  <text class="small" x="496" y="700">GPB6 and GPB7 are spare.</text>
+
+  <path class="power" d="M280 276 H480"/>
+  <path class="ground" d="M280 328 H425 V846 H1170"/>
+  <path class="i2c" d="M280 416 H480"/>
+  <path class="i2c" d="M280 468 H450 V468 H480"/>
+  <path class="optional" d="M280 556 H480"/>
+  <text class="small" x="337" y="402" fill="#087d68">SDA</text>
+  <text class="small" x="337" y="454" fill="#087d68">SCL</text>
+  <text class="small" x="330" y="542" fill="#a66a00">optional only</text>
+
+  <text class="heading" x="860" y="121">Normally-open push buttons</text>
+  <text class="muted" x="860" y="145">One side of every button joins the shared GND rail.</text>
+
+  <g>
+    <text class="pin" x="804" y="204">GPA0</text><path class="buttonwire" d="M770 200 H900"/><circle cx="910" cy="200" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 200 H935 M935 200 l16 -12"/><path class="ground" d="M951 200 V846"/><text class="small" x="970" y="205">Button 1</text>
+    <text class="pin" x="804" y="244">GPA1</text><path class="buttonwire" d="M770 240 H900"/><circle cx="910" cy="240" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 240 H935 M935 240 l16 -12"/><path class="ground" d="M951 240 V846"/><text class="small" x="970" y="245">Button 2</text>
+    <text class="pin" x="804" y="284">GPA2</text><path class="buttonwire" d="M770 280 H900"/><circle cx="910" cy="280" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 280 H935 M935 280 l16 -12"/><path class="ground" d="M951 280 V846"/><text class="small" x="970" y="285">Button 3</text>
+    <text class="pin" x="804" y="324">GPA3</text><path class="buttonwire" d="M770 320 H900"/><circle cx="910" cy="320" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 320 H935 M935 320 l16 -12"/><path class="ground" d="M951 320 V846"/><text class="small" x="970" y="325">Button 4</text>
+    <text class="pin" x="804" y="364">GPA4</text><path class="buttonwire" d="M770 360 H900"/><circle cx="910" cy="360" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 360 H935 M935 360 l16 -12"/><path class="ground" d="M951 360 V846"/><text class="small" x="970" y="365">Button 5</text>
+    <text class="pin" x="804" y="404">GPA5</text><path class="buttonwire" d="M770 400 H900"/><circle cx="910" cy="400" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 400 H935 M935 400 l16 -12"/><path class="ground" d="M951 400 V846"/><text class="small" x="970" y="405">Button 6</text>
+    <text class="pin" x="804" y="444">GPA6</text><path class="buttonwire" d="M770 440 H900"/><circle cx="910" cy="440" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 440 H935 M935 440 l16 -12"/><path class="ground" d="M951 440 V846"/><text class="small" x="970" y="445">Button 7</text>
+    <text class="pin" x="804" y="484">GPA7</text><path class="buttonwire" d="M770 480 H900"/><circle cx="910" cy="480" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 480 H935 M935 480 l16 -12"/><path class="ground" d="M951 480 V846"/><text class="small" x="970" y="485">Button 8</text>
+    <text class="pin" x="804" y="544">GPB0</text><path class="buttonwire" d="M770 540 H900"/><circle cx="910" cy="540" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 540 H935 M935 540 l16 -12"/><path class="ground" d="M951 540 V846"/><text class="small" x="970" y="545">Button 9</text>
+    <text class="pin" x="804" y="584">GPB1</text><path class="buttonwire" d="M770 580 H900"/><circle cx="910" cy="580" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 580 H935 M935 580 l16 -12"/><path class="ground" d="M951 580 V846"/><text class="small" x="970" y="585">Button 10</text>
+    <text class="pin" x="804" y="624">GPB2</text><path class="buttonwire" d="M770 620 H900"/><circle cx="910" cy="620" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 620 H935 M935 620 l16 -12"/><path class="ground" d="M951 620 V846"/><text class="small" x="970" y="625">Button 11</text>
+    <text class="pin" x="804" y="664">GPB3</text><path class="buttonwire" d="M770 660 H900"/><circle cx="910" cy="660" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 660 H935 M935 660 l16 -12"/><path class="ground" d="M951 660 V846"/><text class="small" x="970" y="665">Button 12</text>
+    <text class="pin" x="804" y="704">GPB4</text><path class="buttonwire" d="M770 700 H900"/><circle cx="910" cy="700" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 700 H935 M935 700 l16 -12"/><path class="ground" d="M951 700 V846"/><text class="small" x="970" y="705">Button 13</text>
+    <text class="pin" x="804" y="744">GPB5</text><path class="buttonwire" d="M770 740 H900"/><circle cx="910" cy="740" r="8" fill="#fff" stroke="#25364d" stroke-width="2"/><path class="wire" d="M918 740 H935 M935 740 l16 -12"/><path class="ground" d="M951 740 V846"/><text class="small" x="970" y="745">Button 14</text>
+  </g>
+  <rect class="note" x="796" y="782" width="390" height="68"/>
+  <text class="small" x="815" y="808">GPB6 and GPB7 remain unused and available.</text>
+  <text class="small" x="815" y="830">No external pull-up resistors are needed for the buttons.</text>
+  <text class="label" x="48" y="909">Firmware: poll both MCP23017 ports every 5-10 ms and debounce each button for about 20-30 ms.</text>
+  <text class="muted" x="48" y="936">If interrupts are used later, connect one MCP interrupt output to a spare Pico GPIO and read INTCAP or GPIO to clear it.</text>
+</svg>

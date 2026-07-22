@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Seven-position resistor ladder for a Raspberry Pi Pico ADC input</title>
+  <desc id="desc">Eight 10K resistors form a ladder between 3.3 volts and ground. Seven taps connect to active terminals of an eight-position rotary switch. The locked-out eighth terminal connects to ground as an invalid reading. The switch wiper connects through 1K to the Pico ADC input with a 100nF capacitor to ground.</desc>
+  <style>
+    .bg { fill: #f7f9fc; }
+    .box { fill: #ffffff; stroke: #25364d; stroke-width: 2; rx: 10; }
+    .res { fill: #fff4cf; stroke: #8d5900; stroke-width: 2; rx: 4; }
+    .wire { fill: none; stroke: #23364d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .signal { fill: none; stroke: #087d68; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .invalid { fill: none; stroke: #ad6600; stroke-width: 2.5; stroke-dasharray: 7 5; }
+    .node { fill: #087d68; stroke: #075e50; stroke-width: 1.5; }
+    .title { font: bold 27px Arial, sans-serif; fill: #172534; }
+    .heading { font: bold 20px Arial, sans-serif; fill: #172534; }
+    .label { font: 15px Arial, sans-serif; fill: #172534; }
+    .small { font: 13px Arial, sans-serif; fill: #44576c; }
+    .pin { font: bold 15px Arial, sans-serif; fill: #172534; }
+  </style>
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="42" y="45">8-position rotary switch: seven enabled positions using one Pico ADC</text>
+  <text class="label" x="42" y="71">Build one of these circuits per selector. Use only the 10K and 1K resistors listed; do not add a 100K pulldown.</text>
+
+  <rect class="box" x="42" y="150" width="235" height="405"/>
+  <text class="heading" x="86" y="188">Raspberry Pi Pico</text>
+  <text class="pin" x="72" y="255">3V3</text>
+  <text class="pin" x="72" y="348">GP26 / ADC0</text>
+  <text class="small" x="72" y="373">Use GP27 / ADC1</text>
+  <text class="small" x="72" y="392">for the second switch.</text>
+  <text class="pin" x="72" y="505">GND</text>
+  <circle cx="260" cy="249" r="5" fill="#bd3232"/>
+  <circle cx="260" cy="342" r="5" fill="#087d68"/>
+  <circle cx="260" cy="499" r="5" fill="#343434"/>
+
+  <rect class="box" x="410" y="120" width="290" height="550"/>
+  <text class="heading" x="474" y="157">8 x 10K ladder</text>
+  <text class="small" x="452" y="180">Use 1% resistors if available.</text>
+  <path class="wire" d="M554 210 V600"/>
+  <text class="pin" x="520" y="205">3V3</text>
+  <text class="pin" x="524" y="628">GND</text>
+  <path class="wire" d="M260 249 H554"/>
+  <path class="wire" d="M260 499 H350 V600 H554"/>
+
+  <g>
+    <rect class="res" x="518" y="220" width="72" height="25"/><text class="label" x="537" y="238">10K</text>
+    <rect class="res" x="518" y="270" width="72" height="25"/><text class="label" x="537" y="288">10K</text>
+    <rect class="res" x="518" y="320" width="72" height="25"/><text class="label" x="537" y="338">10K</text>
+    <rect class="res" x="518" y="370" width="72" height="25"/><text class="label" x="537" y="388">10K</text>
+    <rect class="res" x="518" y="420" width="72" height="25"/><text class="label" x="537" y="438">10K</text>
+    <rect class="res" x="518" y="470" width="72" height="25"/><text class="label" x="537" y="488">10K</text>
+    <rect class="res" x="518" y="520" width="72" height="25"/><text class="label" x="537" y="538">10K</text>
+    <rect class="res" x="518" y="570" width="72" height="25"/><text class="label" x="537" y="588">10K</text>
+  </g>
+
+  <rect class="box" x="830" y="150" width="310" height="405"/>
+  <text class="heading" x="876" y="188">8-position rotary switch</text>
+  <text class="small" x="887" y="211">Position 8 is mechanically locked out.</text>
+  <circle cx="980" cy="371" r="100" fill="#f7f9fc" stroke="#25364d" stroke-width="3"/>
+  <circle cx="980" cy="371" r="12" fill="#23364d"/>
+  <text class="pin" x="1003" y="377">COM / wiper</text>
+  <path class="signal" d="M980 371 L897 302"/>
+
+  <g>
+    <circle class="node" cx="897" cy="302" r="8"/><text class="label" x="865" y="297">1</text>
+    <circle class="node" cx="865" cy="371" r="8"/><text class="label" x="838" y="376">2</text>
+    <circle class="node" cx="897" cy="440" r="8"/><text class="label" x="865" y="450">3</text>
+    <circle class="node" cx="980" cy="471" r="8"/><text class="label" x="975" y="499">4</text>
+    <circle class="node" cx="1063" cy="440" r="8"/><text class="label" x="1080" y="450">5</text>
+    <circle class="node" cx="1095" cy="371" r="8"/><text class="label" x="1112" y="376">6</text>
+    <circle class="node" cx="1063" cy="302" r="8"/><text class="label" x="1080" y="307">7</text>
+    <circle cx="980" cy="271" r="8" fill="#fff" stroke="#ad6600" stroke-width="2"/><text class="label" x="972" y="250">8</text>
+  </g>
+
+  <g>
+    <circle class="node" cx="554" cy="257" r="5"/><path class="signal" d="M554 257 C720 232 850 260 1063 302"/><text class="small" x="605" y="244">tap 7: 2.89 V</text>
+    <circle class="node" cx="554" cy="307" r="5"/><path class="signal" d="M554 307 C720 294 855 336 1095 371"/><text class="small" x="605" y="294">tap 6: 2.48 V</text>
+    <circle class="node" cx="554" cy="357" r="5"/><path class="signal" d="M554 357 C720 355 835 415 1063 440"/><text class="small" x="605" y="344">tap 5: 2.06 V</text>
+    <circle class="node" cx="554" cy="407" r="5"/><path class="signal" d="M554 407 C690 418 755 475 980 471"/><text class="small" x="605" y="394">tap 4: 1.65 V</text>
+    <circle class="node" cx="554" cy="457" r="5"/><path class="signal" d="M554 457 C700 465 780 462 897 440"/><text class="small" x="605" y="444">tap 3: 1.24 V</text>
+    <circle class="node" cx="554" cy="507" r="5"/><path class="signal" d="M554 507 C700 500 770 430 865 371"/><text class="small" x="605" y="494">tap 2: 0.83 V</text>
+    <circle class="node" cx="554" cy="557" r="5"/><path class="signal" d="M554 557 C700 530 780 382 897 302"/><text class="small" x="605" y="544">tap 1: 0.41 V</text>
+  </g>
+
+  <path class="invalid" d="M980 271 V235 H760 V600 H554"/>
+  <text class="small" x="765" y="227">throw 8 to GND: invalid reading</text>
+
+  <path class="wire" d="M980 371 C825 625 475 625 260 342"/>
+  <rect class="res" x="320" y="325" width="62" height="34"/><text class="label" x="338" y="347">1K</text>
+  <path class="wire" d="M320 342 H260"/>
+  <path class="wire" d="M294 342 V415"/>
+  <line x1="272" y1="415" x2="316" y2="415" stroke="#7a3fb4" stroke-width="3"/>
+  <line x1="272" y1="431" x2="316" y2="431" stroke="#7a3fb4" stroke-width="3"/>
+  <path class="wire" d="M294 431 V499"/>
+  <text class="small" x="319" y="429">100nF</text>
+  <text class="label" x="42" y="714">Wiper - 1K - ADC. Put the 100nF capacitor on the ADC side of the 1K resistor. Repeat with GP27 / ADC1 for the second selector.</text>
+</svg>
