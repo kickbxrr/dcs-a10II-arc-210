@@ -1,6 +1,6 @@
-# ARC-210 wiring plan
+# DCS ARC-210 Radio head
 
-![panel](./faceplate.png)
+![faceplate.png](images/faceplate.png)
 
 # Summary
 
@@ -25,9 +25,10 @@ Raw direct input count:
 
 That would require 42 digital inputs before allowing any pins for an SPI display. The Pico does not have enough spare GPIO for that approach.
 
-# Recommended architecture
+# Architecture
 
 Use the Pico for timing-sensitive and analog inputs, and use an I2C I/O expander for the simple push buttons.
+![pcb-schematic.png](images/pcb-schematic.png)
 
 Recommended allocation:
 
@@ -70,18 +71,18 @@ Power and ground allocation:
 - Use accessible Pico GND pin 23 for the common ground circuit. Pin 33 (`AGND`) is not used. Encoder commons, button returns, the MCP23017, both selector ladders, and their 100nF capacitors may all share this ground circuit. If selector readings later prove noisy, shorten their signal and ground wiring before making larger wiring changes.
 - Do not put 5V on any Pico GPIO, ADC, MCP23017 logic, or resistor-ladder connection.
 
-![Complete Pico wiring allocation](./full-pico-wiring.svg)
+![Complete Pico wiring allocation](images/full-pico-wiring.svg)
 
 # I/O expander
+![mcp23017-14-button-wiring.svg](images/mcp23017-14-button-wiring.svg)
 
-Recommended part: Waveshare MCP23017 IO Expansion Board I2C.
+I used the Waveshare MCP23017 IO Expansion Board I2C.
 
-Use the MCP23017 for push buttons only. Rotary encoders should stay on Pico GPIO because they are timing-sensitive.
+I'm using the MCP23017 for push buttons only. Rotary encoders should stay on Pico GPIO because they are timing-sensitive.
 
 The MCP23017 adds 16 digital I/O pins while using only 2 Pico pins for I2C. The Pico remains in charge: it asks the MCP23017 for its input state over I2C, and the MCP23017 returns a 16-bit value where each bit represents one expander pin.
 
-Suggested wiring:
-
+How I wired it to the Raspberry Pi Pico:
 ```text
 Pico 3V3  -> MCP23017 VCC
 Pico GND  -> MCP23017 GND
@@ -92,9 +93,12 @@ Each push button:
 MCP23017 input pin -> button -> GND
 ```
 
-Use `GP4` for SDA and `GP5` for SCL. The Arduino sketch configures this I2C0 bus at 400kHz. The Waveshare board should provide the required I2C pull-ups; do not add more pull-ups until the board documentation has been checked.
+Use `GP4` for SDA and `GP5` for SCL. The Arduino sketch configures this I2C0 bus at 400kHz. 
+The Waveshare board should provide the required I2C pull-ups; do not add more pull-ups until 
+the board documentation has been checked.
 
-Configure the MCP23017 inputs with internal pull-ups in firmware. No external pull-up resistors are required for the 14 buttons. A pressed button should read low.
+Configure the MCP23017 inputs with internal pull-ups in firmware. No external pull-up resistors
+are required for the 14 buttons. A pressed button should read low.
 
 Button state logic:
 
@@ -103,29 +107,12 @@ button not pressed = input reads HIGH / 1
 button pressed     = input connected to GND, reads LOW / 0
 ```
 
-Suggested button pin mapping:
+Suggested button pin mapping be based on the exact MCP23017 chip you use. In my original prototype where I just used wires to connect everyting used whatever was convienent
 
-```text
-Button 1  -> MCP23017 GPA0
-Button 2  -> MCP23017 GPA1
-Button 3  -> MCP23017 GPA2
-Button 4  -> MCP23017 GPA3
-Button 5  -> MCP23017 GPA4
-Button 6  -> MCP23017 GPA5
-Button 7  -> MCP23017 GPA6
-Button 8  -> MCP23017 GPA7
+For my PCB, I think I used GPB0-7 and GPA0-5.
 
-Button 9  -> MCP23017 GPB0
-Button 10 -> MCP23017 GPB1
-Button 11 -> MCP23017 GPB2
-Button 12 -> MCP23017 GPB3
-Button 13 -> MCP23017 GPB4
-Button 14 -> MCP23017 GPB5
-Spare     -> MCP23017 GPB6
-Spare     -> MCP23017 GPB7
-```
 
-![MCP23017 14-button wiring](./mcp23017-14-button-wiring.svg)
+![MCP23017 14-button wiring](images/mcp23017-14-button-wiring.svg)
 
 ## Polling versus interrupts
 
@@ -150,29 +137,9 @@ Button press
 
 Run the MCP23017 board at 3.3V with the Pico. Keeping the control wiring at 3.3V avoids level-safety issues because Pico GPIO are not 5V tolerant.
 
-The Waveshare board is preferred over a generic MCP23017 module because it is documented, exposes address selection, and exposes interrupt pins. The interrupt pins are optional; simple polling is acceptable for push buttons.
+I picked the Waveshare board over a generic MCP23017 module because it is documented, exposes address selection, and exposes interrupt pins. The interrupt pins are optional; simple polling is acceptable for push buttons.
 
 Multiple MCP23017 boards can share the same Pico I2C bus if they have different I2C addresses. The MCP23017 supports address selection with A0/A1/A2, which allows up to 8 MCP23017 devices on the same bus.
-
-Possible future expansion:
-
-```text
-MCP23017 #1 at 0x20 -> 14 push buttons + 2 spares
-MCP23017 #2 at 0x21 -> optional direct digital wiring for both 8-position switches
-MCP23017 #3 at 0x22 -> spare expansion or future controls
-```
-
-If the two 8-position rotary switches are moved from ADC resistor ladders to an MCP23017 later, each switch uses 8 MCP23017 inputs. Both switches fit exactly on one MCP23017:
-
-```text
-Switch 1 common/wiper -> GND
-Switch 1 throws 1-8  -> MCP23017 GPA0-GPA7
-
-Switch 2 common/wiper -> GND
-Switch 2 throws 1-8  -> MCP23017 GPB0-GPB7
-```
-
-This would make each selector position a plain digital input and would free ADC0 and ADC1. It costs another MCP23017 board, so the resistor ladder approach remains the cheaper first design.
 
 # 8-position rotary switches (seven enabled positions)
 
@@ -194,26 +161,13 @@ Recommended wiring approach: use each switch as an ADC resistor ladder so each r
 The eighth physical switch position is mechanically locked out. The circuit therefore provides seven valid selector readings. Wire the disabled eighth throw to GND as an invalid diagnostic value, rather than leaving it floating.
 
 ## Resistor ladder concept
+![8-position-resistor-ladder.svg](images/8-position-resistor-ladder.svg)
 
 The Pico ADC reads voltage. A resistor ladder creates a set of known voltages between 3.3V and GND. The rotary switch selects one of those voltage taps and sends it to the ADC input.
 
 Use one resistor ladder per switch. The two switches cannot share a ladder because each common/wiper needs an independent ADC voltage at the same time.
 
-![7-position resistor ladder wiring](./7-position-resistor-ladder.svg)
-
-Physical wiring summary:
-
-- 3V3 and GND feed the resistor ladder.
-- The resistor ladder is a chain of 8 equal-value resistors between 3V3 and GND.
-- The spaces between resistors are tap points, each with a different voltage.
-- Seven outside switch terminals connect to the seven ladder taps.
-- The locked-out eighth terminal connects directly to GND, producing an invalid ADC reading near zero if the lockout is ever defeated.
-- The switch's center/common/wiper pin connects to the Pico ADC input.
-- When the switch turns, it connects the ADC input to one selected ladder voltage.
-- For the second 8-position switch, build the same circuit again and connect its common/wiper to a different ADC pin.
-
 Recommended ladder:
-
 ```text
 3V3
  |
@@ -279,7 +233,6 @@ Spare                  -> Pico GP28 / ADC2
 ```
 
 ## Expected ADC values
-
 For a 12-bit ADC reading from 0-4095, approximate values are:
 
 ```text
@@ -296,7 +249,6 @@ Locked-out position: approximately 0 (invalid)
 Firmware should define threshold ranges for each position instead of checking exact values. A good starting point is to place each threshold halfway between adjacent expected values, then require the decoded position to remain stable for 20-50ms before accepting the change.
 
 # SPI display reserve
-
 The design should reserve pins for a future SPI display. A typical SPI display may need:
 
 - SCK
@@ -381,11 +333,13 @@ The Arduino-Pico joystick descriptor supports 32 buttons, so this allocation use
 
 The first PCB revision is a panel-sized button carrier. The 14 tactile buttons mount directly to the PCB; the seven encoders and two selectors remain faceplate-mounted and connect through harnesses.
 
-Current design package:
-
-- [PCB design notes](./pcb-revA/arc210-revA-design.md)
-- [Mechanical placement reference](./pcb-revA/arc210-revA-mechanical.svg)
-- [Preliminary electrical schematic](./pcb-revA/arc210-revA-schematic.svg)
-- [KiCad panel reference board](./pcb-revA/ARC210_RevA_panel_reference.kicad_pcb)
-
 Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets, a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm tactile-switch footprints. It is not ready for fabrication until the exact tactile switch, button-cap/plunger arrangement, rotary-control dimensions, mounting method, and connector family are confirmed.
+
+## Kicad
+![pcb-kicad.png](images/pcb-kicad.png)
+
+### 3D Front
+![pcb-f.png](images/pcb-f.png)
+
+### 3d Back
+![pcb-b.png](images/pcb-b.png)

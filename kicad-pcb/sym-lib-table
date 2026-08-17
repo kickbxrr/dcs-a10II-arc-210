@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "Custom") (type "") (uri "${KIPRJMOD}/ARC210.pretty") (options "") (descr ""))
+)
