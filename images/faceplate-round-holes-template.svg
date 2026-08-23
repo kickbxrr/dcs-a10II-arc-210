@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="146mm" height="133mm" viewBox="0 0 146 133">
+  <defs>
+    <!-- 1. Define the clipping path shape -->
+    <clipPath id="my-clip">
+      <rect x="0" y="0" width="146" height="133" rx="2" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#my-clip)">
   <title>ARC-210 Template</title>
   <desc>Bottom-up mounting-board reference. Board size 146 x 133 mm. Encoder holes 9 mm; selector holes 16 mm.</desc>
-  <rect x="0" y="0" width="146" height="133" fill="none" stroke="#888" stroke-width="0.25"/>
+  <rect x="0" y="0" width="146" height="133" fill="none" stroke="none" stroke-width="0"/>
   <g fill="none" stroke="#00a0ff" stroke-width="0.25">
-    <circle id="ENC-1" cy="92.364" cx="27.8"  r="4.5"/>
-    <circle id="ENC-2" cy="92.364" cx="49.5" r="4.5"/>
-    <circle id="ENC-3" cy="92.364" cx="71.75" r="4.5"/>
-    <circle id="ENC-4" cy="92.364" cx="96.792" r="4.5"/>
-    <circle id="ENC-5" cy="92.364" cx="118.105" r="4.5"/>
-    <circle id="ENC-CH" cx="71.75" cy="115.700" r="4.5"/>
-    <circle id="ENC-SQL" cx="124.65" cy="30.3" r="4.5"/>
-    <circle id="SW-Mode" cx="39.3" cy="115.7" r="9"/>
-    <circle id="SW-Band" cx="103.5" cy="115.7" r="9"/>
+    <circle id="ENC-1" cy="93.6" cx="28.5"  r="5"/>
+    <circle id="ENC-2" cy="93.6" cx="49.5" r="5"/>
+    <circle id="ENC-3" cy="93.6" cx="71.75" r="5"/>
+    <circle id="ENC-4" cy="93.5" cx="93" r="5"/>
+    <circle id="ENC-5" cy="93.6" cx="114.5" r="5"/>
+    <circle id="ENC-SQL" cx="123.5" cy="29.7" r="5"/>
+    <circle id="ENC-CH" cx="71.75" cy="116.5" r="5"/>
+    <circle id="SW-Mode" cx="39.3" cy="117.7" r="9"/>
+    <circle id="SW-Band" cx="103.5" cy="117.7" r="9"/>
   </g>
   <g fill="none" stroke="#ffffff" stroke-width="0.18">
-    <path d="M26.475 92.364h2.66M27.805 91.034v2.66"/>
-    <path d="M48.175 92.364h2.66M49.505 91.034v2.66"/>
-    <path d="M70.425 92.364h2.66M71.755 91.034v2.66"/>
-    <path d="M95.467 92.364h2.66M96.797 91.034v2.66"/>
-    <path d="M116.78 92.364h2.66M118.11 91.034v2.66"/>
-    <path d="M70.425 115.700h2.66M71.755 114.370v2.66"/>
-    <path d="M123.325 30.3h2.66M124.655 28.97v2.66"/>
-    <path d="M37.975 115.7h2.66M39.305 114.37v2.66"/>
-    <path d="M102.175 115.7h2.66M103.505 114.37v2.66"/>
+    <path d="M27.17 93.6h2.66M28.5 92.27v2.66"/>
+    <path d="M48.17 93.6h2.66M49.5 92.27v2.66"/>
+    <path d="M70.42 93.6h2.66M71.75 92.27v2.66"/>
+    <path d="M91.67 93.5h2.66M93 92.17v2.66"/>
+    <path d="M113.17 93.6h2.66M114.5 92.27v2.66"/>
+    <path d="M70.42 116.5h2.66M71.75 115.17v2.66"/>
+    <path d="M122.17 29.7h2.66M123.5 28.37v2.66"/>
+    <path d="M37.97 117.7h2.66M39.3 116.37v2.66"/>
+    <path d="M102.17 117.7h2.66M103.5 116.37v2.66"/>
   </g>
   <g font-family="sans-serif" font-size="1.8" fill="#ffffff" text-anchor="middle">
-    <text x="27.8" y="85.364">ENC1</text>
+    <text x="28.5" y="85.364">ENC1</text>
     <text x="49.5" y="85.364">ENC2</text>
     <text x="71.75" y="85.364">ENC3</text>
-    <text x="96.792" y="85.364">ENC4</text>
-    <text x="118.105" y="85.364">ENC5</text>
-    <text x="71.75" y="108.700">Channel</text>
-    <text x="124.65" y="23.3">SQL</text>
+    <text x="93" y="85.364">ENC4</text>
+    <text x="115" y="85.364">ENC5</text>
+    <text x="71.5" y="108.700">Channel</text>
+    <text x="123.5" y="23">SQL</text>
     <text x="39.3" y="105">Mode Switch</text>
     <text x="103.5" y="105">Band Switch</text>
   </g>
@@ -53,6 +60,27 @@
     <rect x="126" y="66" width="13" height="13" rx="1"/>
     <rect x="126" y="84.75" width="13" height="24" rx="1"/>
   </g>
+  <g fill="#000" stroke="none" stroke-width="0">
+    <text font-family="sans-serif" font-size="5" x="35" y="30">
+      Display size
+    </text>
+    <text font-family="sans-serif" font-size="4.5" x="35" y="35">
+      80.8 x 59.4 mm
+    </text>
+    <text font-family="sans-serif" font-size="4.5" x="35" y="40">
+      3.18 x 2.34 in
+    </text>
+  </g>
+  <g fill="#000" stroke="none" stroke-width="0">
+    <rect x="0" y="0" width="146" height="2" />
+    <rect x="0" y="131" width="146" height="2" />
+    <rect x="0" y="0" width="2" height="133" />
+    <rect x="144" y="0" width="2" height="133" />
+    <rect x="133" y="-22" width="26" height="44" rx="6" />
+    <rect x="133" y="111" width="26" height="44" rx="6" />
+    <rect x="-13" y="-22" width="26" height="44"  rx="6"/>
+    <rect x="-13" y="111" width="26" height="44" rx="6"/>
+  </g>
   <g fill="none" stroke="#ffffff" stroke-width="0.2">
     <path d="M30.87 9.25h2.66M32.2 7.92v2.66"/>
     <path d="M58.37 9.25h2.66M59.7 7.92v2.66"/>
@@ -70,13 +98,15 @@
     <path d="M131.17 96.75h2.66M132.5 95.42v2.66"/>
   </g>
   <g fill="none" stroke="#ff6000" stroke-dasharray="2" stroke-width="0.25">
-    <rect x="27" y="19.2" width="80.9" height="59.5" rx="2"/>
+    <rect x="26.5" y="19.2" width="80.9" height="59.5" rx="6"/>
   </g>
   <g fill="none" stroke="#ffffff" stroke-width="0.25">
-    <circle id="M1" cx="5" cy="14" r="2.6"/>
-    <circle id="M3" cx="5" cy="119" r="2.6"/>
-    <circle id="M2" cx="140.4" cy="13.9" r="2.6"/>
-    <circle id="M3" cx="140.4" cy="119.1" r="2.6"/>
+    <circle id="M1" cx="5" cy="14.5" r="3"/>
+    <circle id="M3" cx="5" cy="119" r="3"/>
+    <circle id="M2" cx="140.4" cy="14.5" r="3"/>
+    <circle id="M3" cx="140.4" cy="119.1" r="3"/>
+  </g>
+  <g fill="none" stroke="#000" stroke-width="0.25">
     <circle cx="18.9" cy="8.7" r="1.8"/>
     <circle cx="126.0" cy="8.7" r="1.8"/>
     <circle cx="126.0" cy="124.5" r="1.8"/>
@@ -92,5 +122,6 @@
     <text x="126.0" y="5.5">h2</text>
     <text x="126.0" y="122.0">h3</text>
     <text x="18.9" y="122.0">h4</text>
+  </g>
   </g>
 </svg>
