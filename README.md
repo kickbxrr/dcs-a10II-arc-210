@@ -1,6 +1,10 @@
 # DCS ARC-210 Radio head
 
-![faceplate.png](images/faceplate.png)
+![faceplate.jpg](images/faceplate.jpg)
+
+I got this facepolate from **SFSauto** on etsy [A10 ARC210](https://www.etsy.com/listing/1082384231/a10-thunderbolt-left-console-vhf-uhf),
+but it seem like either this guy makes them for PC flights.com or got them from them. They are also available 
+from [PC flights.com](https://pcflights.com), direct link [a-10c-thunderbolt-warthog-vhf-uhf-panel](https://pcflights.com/a-10c-thunderbolt-warthog-vhf-uhf-panel/)
 
 # Summary
 
@@ -74,7 +78,6 @@ Power and ground allocation:
 ![Complete Pico wiring allocation](images/full-pico-wiring.svg)
 
 # I/O expander
-![mcp23017-14-button-wiring.svg](images/mcp23017-14-button-wiring.svg)
 
 I used the Waveshare MCP23017 IO Expansion Board I2C.
 
@@ -248,7 +251,7 @@ Locked-out position: approximately 0 (invalid)
 
 Firmware should define threshold ranges for each position instead of checking exact values. A good starting point is to place each threshold halfway between adjacent expected values, then require the decoded position to remain stable for 20-50ms before accepting the change.
 
-# SPI display reserve
+## SPI display reserve
 The design should reserve pins for a future SPI display. A typical SPI display may need:
 
 - SCK
@@ -260,7 +263,7 @@ The design should reserve pins for a future SPI display. A typical SPI display m
 
 Using the MCP23017 for push buttons keeps enough Pico pins available for the display. Direct-to-GPIO wiring for all buttons and switch positions would make the SPI display difficult to add cleanly.
 
-# Interface to DCS
+## Interface to DCS
 
 Initial recommendation: USB HID joystick/game-controller firmware using Arduino with the Arduino-Pico core.
 
@@ -324,16 +327,41 @@ The sketch presents one USB joystick with all 32 buttons used and no analog cont
 
 The Arduino-Pico joystick descriptor supports 32 buttons, so this allocation uses its entire button capacity. The selectors intentionally emit relative next/previous pulses instead of using fourteen more held buttons, keeping the design within that limit. Bind each selector's next/previous buttons to the matching DCS increment/decrement commands. On startup, align the simulator state with the physical selector positions manually.
 
-# Open items before final schematic
+## Open items before final schematic
 
-- Confirm the SPI display model and pin requirements
-- Confirm the final USB HID report: 32-button capacity, encoder behavior, and selector behavior
+- SPI display model and pin requirements
+- Find suitable display
 
-# PCB Rev A work
+## Initial Prototype
 
-The first PCB revision is a panel-sized button carrier. The 14 tactile buttons mount directly to the PCB; the seven encoders and two selectors remain faceplate-mounted and connect through harnesses.
+The initial prototype was done on perf boards.
+The Pico was mounted in a 2x20 socket and the MCP23017 was mounted in a 1x28 socket.
+The components are just soldiered together using random wires. the whole thing is kind
+of a mess. It works but it is ugly.
 
-Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets, a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm tactile-switch footprints. It is not ready for fabrication until the exact tactile switch, button-cap/plunger arrangement, rotary-control dimensions, mounting method, and connector family are confirmed.
+![proto-a.png](images/proto-a.png)
+![proto-b.png](images/proto-b.png)
+![proto-c.png](images/proto-c.png)
+![proto-d.png](images/proto-d.png)
+![proto-e.png](images/proto-e.png)
+
+# PCB
+I figured it would be cool to see if I can create a PCB. 
+Watching some youtube videos from the Warthog project and
+some DCS community videos of people build button boxes and
+different panels made me think I could clean this up a lot.
+
+## PCB Rev A work
+
+The first PCB revision is a panel-sized button carrier. The 14 tactile 
+buttons mount directly to the PCB; the seven encoders and two selectors
+remain faceplate-mounted and connect through harnesses.
+
+Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets, 
+a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm 
+tactile-switch footprints. It is not ready for fabrication until
+the exact tactile switch, button-cap/plunger arrangement, rotary-control
+dimensions, mounting method, and connector family are confirmed.
 
 ## Kicad
 ![pcb-kicad.png](images/pcb-kicad.png)
