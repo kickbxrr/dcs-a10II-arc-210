@@ -2,22 +2,22 @@
 
 ![faceplate.jpg](images/faceplate.jpg)
 
-I got this facepolate from **SFSauto** on etsy [A10 ARC210](https://www.etsy.com/listing/1082384231/a10-thunderbolt-left-console-vhf-uhf),
-but it seem like either this guy makes them for PC flights.com or got them from them. They are also available 
+I got this faceplate from **SFSauto** on etsy [A10 ARC210](https://www.etsy.com/listing/1082384231/a10-thunderbolt-left-console-vhf-uhf),
+but it seem like either this guy makes them for PC flights.com or got them from them. They are also available
 from [PC flights.com](https://pcflights.com), direct link [a-10c-thunderbolt-warthog-vhf-uhf-panel](https://pcflights.com/a-10c-thunderbolt-warthog-vhf-uhf-panel/)
 
 # Summary
-
-This project is a flight sim ARC-210 style radio panel for use with DCS. The first target interface is USB HID joystick/game-controller input from a Raspberry Pi Pico.
+This project is a flight sim ARC-210 style radio panel for use with DCS.
+The first target interface is USB HID joystick/game-controller input from a Raspberry Pi Pico.
 
 The panel needs to support:
-
 - 14 push buttons
 - 7 rotary encoders, without integrated push buttons
 - 2 single-pole 8-position rotary switches with 45 degree throw; 7 usable positions each and the eighth mechanically locked out
 - Optional SPI display later
 
 # Main design decision
+Use the Raspberry Pi Pico for timing-sensitive and analog inputs, and use an I2C I/O expander for the simple push buttons.
 
 There are too many inputs for a clean direct-to-GPIO design on a Raspberry Pi Pico.
 
@@ -27,14 +27,10 @@ Raw direct input count:
 - 7 rotary encoders = 14 digital inputs
 - 2 rotary switches = 14 digital inputs when only 7 positions per switch are enabled
 
-That would require 42 digital inputs before allowing any pins for an SPI display. The Pico does not have enough spare GPIO for that approach.
+That would require 42 digital inputs before allowing any pins for an SPI display.
+The Pico does not have enough spare GPIO for that approach.
 
-# Architecture
-
-Use the Pico for timing-sensitive and analog inputs, and use an I2C I/O expander for the simple push buttons.
-![pcb-schematic.png](images/pcb-schematic.png)
-
-Recommended allocation:
+Initeial hardware allocation:
 
 - Raspberry Pi Pico direct GPIO:
   - 7 rotary encoders, 2 GPIO per encoder
@@ -43,14 +39,16 @@ Recommended allocation:
 - Raspberry Pi Pico ADC:
   - 8-position rotary switch 1 through an analog resistor ladder
   - 8-position rotary switch 2 through an analog resistor ladder
-  - GP28 / ADC2 remains spare
+  - GP28 / ADC2 **spare**
 - MCP23017 I2C I/O expander:
   - 14 push buttons
   - 2 spare expanded digital inputs
 
-# Exact Pico pin allocation
-
-The following allocation keeps all seven encoders on direct Pico GPIO, places the selector ladders on two of the three exposed ADC pins, and reserves a complete SPI display interface. Pin numbers in parentheses are Raspberry Pi Pico physical header pins.
+# Pico pin allocation
+The following allocation keeps all seven encoders on direct Pico GPIO,
+places the selector ladders on two of the three exposed ADC pins, and
+reserves a complete SPI display interface. Pin numbers in parentheses are
+Raspberry Pi Pico physical header pins.
 
 | Function | Pico GPIO | Header pins | Wiring notes |
 | --- | --- | --- | --- |
@@ -72,18 +70,24 @@ The following allocation keeps all seven encoders on direct Pico GPIO, places th
 Power and ground allocation:
 
 - Pico pin 36 `3V3(OUT)` powers the MCP23017 and both resistor ladders.
-- Use accessible Pico GND pin 23 for the common ground circuit. Pin 33 (`AGND`) is not used. Encoder commons, button returns, the MCP23017, both selector ladders, and their 100nF capacitors may all share this ground circuit. If selector readings later prove noisy, shorten their signal and ground wiring before making larger wiring changes.
+- Use accessible Pico GND pins for the common ground circuit. Encoder commons, button returns, the MCP23017,
+- Pin 33 (`AGND`) is used only for both Resistor ladders.
 - Do not put 5V on any Pico GPIO, ADC, MCP23017 logic, or resistor-ladder connection.
 
 ![Complete Pico wiring allocation](images/full-pico-wiring.svg)
 
 # I/O expander
 
-I used the Waveshare MCP23017 IO Expansion Board I2C.
+I used the Waveshare MCP23017 IO Expansion Board I2C. This was a little pricy given the $12 prive per unit.
+This is 2x the price of the Pico. There are some alternatives and if you go to a DIP you can find them for
+$1.67 as of writing this doc. Using those will be a bit more work. There are also plenty of cheap alternatives
+on Amazon, E-bay, Ali-express etc...
 
 I'm using the MCP23017 for push buttons only. Rotary encoders should stay on Pico GPIO because they are timing-sensitive.
 
-The MCP23017 adds 16 digital I/O pins while using only 2 Pico pins for I2C. The Pico remains in charge: it asks the MCP23017 for its input state over I2C, and the MCP23017 returns a 16-bit value where each bit represents one expander pin.
+The MCP23017 adds 16 digital I/O pins while using only 2 Pico pins for I2C. The Pico remains in
+charge: it asks the MCP23017 for its input state over I2C, and the MCP23017 returns a 16-bit value
+where each bit represents one expander pin.
 
 How I wired it to the Raspberry Pi Pico:
 ```text
@@ -96,8 +100,8 @@ Each push button:
 MCP23017 input pin -> button -> GND
 ```
 
-Use `GP4` for SDA and `GP5` for SCL. The Arduino sketch configures this I2C0 bus at 400kHz. 
-The Waveshare board should provide the required I2C pull-ups; do not add more pull-ups until 
+Use `GP4` for SDA and `GP5` for SCL. The Arduino sketch configures this I2C0 bus at 400kHz.
+The Waveshare board should provide the required I2C pull-ups; do not add more pull-ups until
 the board documentation has been checked.
 
 Configure the MCP23017 inputs with internal pull-ups in firmware. No external pull-up resistors
@@ -159,18 +163,23 @@ Known switch specifications:
 - Number of positions: 8
 - Angle of throw: 45 degrees
 
-Recommended wiring approach: use each switch as an ADC resistor ladder so each rotary switch consumes one Pico ADC input instead of seven digital inputs.
+Recommended wiring approach: use each switch as an ADC resistor ladder so each rotary switch consumes
+one Pico ADC input instead of seven digital inputs.
 
-The eighth physical switch position is mechanically locked out. The circuit therefore provides seven valid selector readings. Wire the disabled eighth throw to GND as an invalid diagnostic value, rather than leaving it floating.
+The eighth physical switch position is mechanically locked out. The circuit therefore provides
+seven valid selector readings. Wire the disabled eighth throw to GND as an invalid diagnostic value,
+rather than leaving it floating.
 
 ## Resistor ladder concept
+![ladder.png](images/ladder.png)
+
 ![8-position-resistor-ladder.svg](images/8-position-resistor-ladder.svg)
 
 The Pico ADC reads voltage. A resistor ladder creates a set of known voltages between 3.3V and GND. The rotary switch selects one of those voltage taps and sends it to the ADC input.
 
 Use one resistor ladder per switch. The two switches cannot share a ladder because each common/wiper needs an independent ADC voltage at the same time.
 
-Recommended ladder:
+Resistor ladder:
 ```text
 3V3
  |
@@ -206,17 +215,16 @@ The 1k resistor protects the ADC input from brief wiring or contact transients. 
 
 For each rotary switch:
 
-- 8x 10k ohm resistors, 1% metal film, through-hole, for the ladder
-- 1x 1k ohm resistor for the ADC signal line
-- 1x 100nF ceramic capacitor, X7R preferred
+- 8x 10k ohm resistors, for the ladder
 - Small perfboard or stripboard
 - 24-26 AWG hookup wire
-- Optional 3-pin connector for 3V3, GND, and ADC signal
+- *Optional* 3-pin connector for 3V3, GND, and ADC signal
 
-Use the available 10k resistors for the ladder and the available 1k resistor in series with the ADC. Do not use the available 100k resistors in this circuit. With 8 x 10k resistors, the ladder is 80k total and draws about 41uA from 3.3V. The voltage steps are wide enough for reliable detection while keeping current draw low.
+Use the available 10k resistors for the ladder in series with the ADC. With 8 x 10k resistors,
+the ladder is 80k total and draws about 41uA from 3.3V. The voltage steps are wide enough for
+reliable detection while keeping current draw low.
 
 ## Assembly steps
-
 1. Use a multimeter to identify the switch common/wiper pin.
 2. Build the 8-resistor chain on a small perfboard.
 3. Connect the top of the chain to Pico 3V3.
@@ -227,7 +235,7 @@ Use the available 10k resistors for the ladder and the available 1k resistor in 
 8. Wire the locked-out eighth switch terminal directly to GND so it decodes as an invalid position if it is ever reached.
 9. In firmware, read the ADC and map voltage ranges to positions 1-7.
 
-Suggested Pico ADC allocation:
+**Suggested** Pico ADC allocation:
 
 ```text
 Switch 1 common/wiper -> Pico GP26 / ADC0
@@ -345,20 +353,23 @@ of a mess. It works but it is ugly.
 ![proto-d.png](images/proto-d.png)
 ![proto-e.png](images/proto-e.png)
 
-# PCB
-I figured it would be cool to see if I can create a PCB. 
+# Phase 2 PCB
+I figured it would be cool to see if I can create a PCB.
 Watching some youtube videos from the Warthog project and
 some DCS community videos of people build button boxes and
 different panels made me think I could clean this up a lot.
 
+# Schematic
+![pcb-schematic.png](images/pcb-schematic.png)
+
 ## PCB Rev A work
 
-The first PCB revision is a panel-sized button carrier. The 14 tactile 
+The first PCB revision is a panel-sized button carrier. The 14 tactile
 buttons mount directly to the PCB; the seven encoders and two selectors
 remain faceplate-mounted and connect through harnesses.
 
-Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets, 
-a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm 
+Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets,
+a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm
 tactile-switch footprints. It is not ready for fabrication until
 the exact tactile switch, button-cap/plunger arrangement, rotary-control
 dimensions, mounting method, and connector family are confirmed.
@@ -371,3 +382,7 @@ dimensions, mounting method, and connector family are confirmed.
 
 ### 3d Back
 ![pcb-b.png](images/pcb-b.png)
+
+
+# How did it all turn out?
+TBD!!!
