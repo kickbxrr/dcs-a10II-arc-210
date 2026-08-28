@@ -259,7 +259,7 @@ Locked-out position: approximately 0 (invalid)
 
 Firmware should define threshold ranges for each position instead of checking exact values. A good starting point is to place each threshold halfway between adjacent expected values, then require the decoded position to remain stable for 20-50ms before accepting the change.
 
-## SPI display reserve
+## SPI display reserve `Phase 3`
 The design should reserve pins for a future SPI display. A typical SPI display may need:
 
 - SCK
@@ -281,18 +281,22 @@ Benefits:
 - DCS can bind buttons, encoders, and selector pulses through normal controller bindings
 - No DCS-specific protocol required for the first version
 
-DCS-BIOS may be worth considering later if the project needs bidirectional state, display synchronization, or aircraft-specific radio data.
+DCS-BIOS may be worth considering later if the project needs bidirectional state, display synchronization, 
+or aircraft-specific radio data. this will be necvessary when the SPI display is added.
 
 # Firmware stack
 
 Selected stack: Arduino IDE with the Arduino-Pico core.
 
-This is the preferred final firmware environment because the project is a USB HID game-controller device, not just an input test rig. Arduino-Pico provides a familiar sketch workflow while retaining C++ performance and offering built-in USB joystick, keyboard, and mouse support. It is a practical fit on both Windows 11 and macOS.
+This is the final firmware environment because the project is a USB HID game-controller device. Arduino-Pico provides
+a familiar sketch workflow while retaining C++ performance and offering built-in 
+USB joystick, keyboard, and mouse support. It is a practical fit on both Windows 11 and macOS. Also I am more familar with 
+the C++ environment of Arduino than Python or CMake.
 
 Suggested implementation order:
 
 1. Bring up the Pico in Arduino IDE with the Arduino-Pico board package.
-2. Scan the I2C bus and confirm the MCP23017 address, expected to be `0x20` unless its address jumpers are changed.
+2. Scan the I2C bus and confirm the MCP23017 address, expected to be `0x27` unless its address jumpers are changed. this got me at first since the AI wanted it to be `0x20` and I had to do a lot of looking up the datasheet to find the right address.
 3. Configure the 14 MCP23017 pins as `INPUT_PULLUP`; poll both ports every 5ms and debounce button state changes for 20-30ms.
 4. Read the two selector ADC inputs; decode selector positions by threshold range and require a stable reading for 20-50ms.
 5. Read the seven encoders directly from Pico GPIO.
@@ -304,16 +308,9 @@ Why Arduino-Pico instead of the Pico SDK:
 - It already provides the USB HID joystick/game-controller capability this panel needs.
 - The Pico SDK provides the most control over low-level timing and custom USB descriptors, but its toolchain and CMake project setup are more involved. It remains a good future option if this panel eventually needs a custom HID report beyond what Arduino-Pico provides.
 
-Why use Python at all:
-
-- CircuitPython and MicroPython are excellent for quick wiring checks because code can be changed and run rapidly, and CircuitPython has a maintained MCP23017 library.
-- CircuitPython can also present a gamepad, but it requires HID configuration in `boot.py` and an additional helper module.
-- For this project, Python is useful as a temporary diagnostic tool, not the selected final firmware stack.
-
 Windows 11 and macOS are both suitable for Arduino-Pico. The finished Pico appears to the computer as a standard USB HID device, so DCS does not need a special driver.
 
 ## Initial controller sketch
-
 The initial Arduino sketch is [arc210_controller.ino](./arc210_controller/arc210_controller.ino).
 
 Arduino IDE setup:
@@ -341,11 +338,11 @@ The Arduino-Pico joystick descriptor supports 32 buttons, so this allocation use
 - Find suitable display
 
 ## Initial Prototype
-
-The initial prototype was done on perf boards.
-The Pico was mounted in a 2x20 socket and the MCP23017 was mounted in a 1x28 socket.
-The components are just soldiered together using random wires. the whole thing is kind
-of a mess. It works but it is ugly.
+The initial prototype was done on perf boards. I found ut the hard way that drilling and cutting perfboards can have 
+some consequences.The worse was getting a few fiberglass splinters. The Pico was mounted on 2 1x20 sockets 
+(Technically it was 4 1x10 connectors that I sanded to fit and work like 2 1x20 connectors), and the MCP23017 
+was mounted on 2 1x10 connectors.The components are just soldiered together using random wires. the whole thing 
+is kind of a mess. It works but it is ugly.
 
 ![proto-a.png](images/proto-a.png)
 ![proto-b.png](images/proto-b.png)

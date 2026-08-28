@@ -43,6 +43,7 @@
 build/
 Build/
 build-*/
+.history/
 
 # CMake generated files
 CMakeFiles/
