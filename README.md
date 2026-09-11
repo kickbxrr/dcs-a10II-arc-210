@@ -259,17 +259,6 @@ Locked-out position: approximately 0 (invalid)
 
 Firmware should define threshold ranges for each position instead of checking exact values. A good starting point is to place each threshold halfway between adjacent expected values, then require the decoded position to remain stable for 20-50ms before accepting the change.
 
-## SPI display reserve `Phase 3`
-The design should reserve pins for a future SPI display. A typical SPI display may need:
-
-- SCK
-- MOSI
-- CS
-- DC
-- optional RST
-- optional backlight control
-
-Using the MCP23017 for push buttons keeps enough Pico pins available for the display. Direct-to-GPIO wiring for all buttons and switch positions would make the SPI display difficult to add cleanly.
 
 ## Interface to DCS
 
@@ -359,17 +348,21 @@ different panels made me think I could clean this up a lot.
 # Schematic
 ![pcb-schematic.png](images/pcb-schematic.png)
 
-## PCB Rev A work
+## PCB Rev B work
 
 The first PCB revision is a panel-sized button carrier. The 14 tactile
 buttons mount directly to the PCB; the seven encoders and two selectors
-remain faceplate-mounted and connect through harnesses.
+remain faceplate-mounted and connect through cutouts in the PCB. Maybe if
+I try to do another prototype I will try surface mounting the compnenets
+and try to get an assempled board with all the part already on the board. 
+this feel like a big leap from I was hand ouldering crap from perfboards with
+a rats nest of wires 3 weeks ago to producing a full PCBA board
 
-Rev A uses a removable Raspberry Pi Pico in two 1x20 sockets,
+Rev B uses a removable Raspberry Pi Pico in two 1x20 sockets,
 a socketed MCP23017-E/SP DIP-28 IC, and provisional 6x6mm
-tactile-switch footprints. It is not ready for fabrication until
-the exact tactile switch, button-cap/plunger arrangement, rotary-control
-dimensions, mounting method, and connector family are confirmed.
+tactile-switch footprints. It was ready for fabrication pretty quick.
+I', pretty sure my trace routing needs some help, but all the button work
+as expected so that is a win in my book.
 
 ## Kicad
 ![pcb-kicad.png](images/pcb-kicad.png)
@@ -379,6 +372,33 @@ dimensions, mounting method, and connector family are confirmed.
 
 ### 3d Back
 ![pcb-b.png](images/pcb-b.png)
+
+### Actual PCB Front
+![PCB-front.png](images/PCB-front.png)
+
+### Actual PCB Back
+![pcb-back.png](images/pcb-back.png)
+
+
+## SPI display `Phase 3`
+The design reserves pins for a SPI display. A typical SPI display may need:
+
+- SCK
+- MOSI
+- CS
+- DC
+- optional RST
+- optional backlight control
+
+Using the MCP23017 for push buttons keeps enough Pico pins available for the display.
+Direct-to-GPIO wiring for all buttons and switch positions would make the SPI display
+difficult to add if impossible.
+
+For the display I get a 3.5" TFT display from Amazon. I did some surgery to remove the display
+from the controller board. I figured I would destroy one of the two boards but in a stroke of luck
+I got it sorted out on the 1st try.
+
+![display-pcb.png](images/display-pcb.png)
 
 
 # How did it all turn out?

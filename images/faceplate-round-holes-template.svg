@@ -8,6 +8,8 @@
   </defs>
   <g clip-path="url(#my-clip)">
   <title>ARC-210 Template</title>
+    <rect height="56.5" width="85" x="24" y="21"/>
+    <rect height="49" width="73.5" x="28" y="25" fill="#FFF"/>
   <desc>Bottom-up mounting-board reference. Board size 146 x 133 mm. Encoder holes 9 mm; selector holes 16 mm.</desc>
   <rect x="0" y="0" width="146" height="133" fill="none" stroke="none" stroke-width="0"/>
   <g fill="none" stroke="#00a0ff" stroke-width="0.25">
