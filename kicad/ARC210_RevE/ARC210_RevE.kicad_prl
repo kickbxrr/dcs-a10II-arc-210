@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 7,
+    "active_layer": 2,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_netclasses": [],
@@ -62,7 +62,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "ARC210_RevD.kicad_prl",
+    "filename": "ARC210_RevE.kicad_prl",
     "version": 5
   },
   "net_inspector_panel": {
@@ -100,7 +100,7 @@
       103,
       74,
       103,
-      42
+      103
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
@@ -122,16 +122,16 @@
   "schematic": {
     "hierarchy_collapsed": [],
     "selection_filter": {
-      "graphics": true,
-      "images": true,
-      "labels": true,
+      "graphics": false,
+      "images": false,
+      "labels": false,
       "lockedItems": false,
-      "otherItems": true,
-      "pins": true,
-      "ruleAreas": true,
+      "otherItems": false,
+      "pins": false,
+      "ruleAreas": false,
       "symbols": true,
-      "text": true,
-      "wires": true
+      "text": false,
+      "wires": false
     }
   }
 }
