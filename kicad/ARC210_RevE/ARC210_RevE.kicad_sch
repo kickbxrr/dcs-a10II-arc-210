@@ -3942,12 +3942,6 @@
 		(uuid "24eee79b-a8c8-4ab8-9c2b-90884481e962")
 	)
 	(junction
-		(at 187.96 101.6)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "29350135-4911-49d5-9f80-9f6bca4d920b")
-	)
-	(junction
 		(at 194.31 123.19)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4056,12 +4050,6 @@
 		(uuid "86f62bd1-7d27-4974-aab8-3f45bb601139")
 	)
 	(junction
-		(at 187.96 105.41)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8b804d4b-e27e-43b6-8c65-8a06d71cceb0")
-	)
-	(junction
 		(at 264.16 71.12)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4126,6 +4114,18 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ca6fe751-616a-4e30-a3a2-ad8592ac0270")
+	)
+	(junction
+		(at 187.96 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ceaeff9f-174c-42f7-8d69-15642d356227")
+	)
+	(junction
+		(at 187.96 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cfdbb1f5-5905-4390-bdf4-e8d954c14651")
 	)
 	(junction
 		(at 264.16 139.7)
@@ -4395,7 +4395,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 109.22) (xy 195.58 109.22)
+			(xy 198.12 110.49) (xy 195.58 110.49)
 		)
 		(stroke
 			(width 0)
@@ -4455,7 +4455,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 107.95) (xy 198.12 109.22)
+			(xy 198.12 107.95) (xy 198.12 110.49)
 		)
 		(stroke
 			(width 0)
@@ -4592,6 +4592,16 @@
 			(type default)
 		)
 		(uuid "2523be19-d052-45f5-bf52-81bfac90eb71")
+	)
+	(wire
+		(pts
+			(xy 187.96 100.33) (xy 187.96 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "25416eeb-a81a-4edc-834a-4b79a15d1867")
 	)
 	(wire
 		(pts
@@ -5092,16 +5102,6 @@
 			(type default)
 		)
 		(uuid "4ceafd3c-f844-4a2a-a004-7e465b5c063a")
-	)
-	(wire
-		(pts
-			(xy 187.96 101.6) (xy 187.96 105.41)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4d74e740-1450-4d92-9633-34bd226137cd")
 	)
 	(wire
 		(pts
@@ -5675,7 +5675,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 102.87) (xy 198.12 101.6)
+			(xy 198.12 102.87) (xy 198.12 100.33)
 		)
 		(stroke
 			(width 0)
@@ -6335,7 +6335,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 101.6) (xy 195.58 101.6)
+			(xy 198.12 100.33) (xy 195.58 100.33)
 		)
 		(stroke
 			(width 0)
@@ -6492,6 +6492,16 @@
 			(type default)
 		)
 		(uuid "e02ce7ff-5db3-4c0d-aaf0-14feed7c1445")
+	)
+	(wire
+		(pts
+			(xy 187.96 49.53) (xy 187.96 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e0dd62a1-d2b7-4f92-9f77-b592fb93d36c")
 	)
 	(wire
 		(pts
@@ -6695,7 +6705,7 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 105.41) (xy 187.96 109.22)
+			(xy 187.96 105.41) (xy 187.96 110.49)
 		)
 		(stroke
 			(width 0)
@@ -6722,16 +6732,6 @@
 			(type default)
 		)
 		(uuid "f369c216-f12d-4bf0-a081-6781dfb4b1e4")
-	)
-	(wire
-		(pts
-			(xy 187.96 49.53) (xy 187.96 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f4da8f78-3cf0-43db-8fc1-0e01d79e915a")
 	)
 	(wire
 		(pts
@@ -6855,7 +6855,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 191.77 109.22 270)
+		(at 191.77 110.49 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6866,7 +6866,7 @@
 		(fields_autoplaced yes)
 		(uuid "00f3df3c-39b2-4de5-a1ee-8e8f8f555629")
 		(property "Reference" "R20"
-			(at 191.77 102.87 90)
+			(at 191.77 104.14 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6876,7 +6876,7 @@
 			)
 		)
 		(property "Value" "10K"
-			(at 191.77 105.41 90)
+			(at 191.77 106.68 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6886,7 +6886,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 191.77 107.442 90)
+			(at 191.77 108.712 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6897,7 +6897,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 109.22 0)
+			(at 191.77 110.49 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6908,7 +6908,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 191.77 109.22 0)
+			(at 191.77 110.49 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7698,7 +7698,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Local:RotarySwitch_P-H397_1P8T"
+		(property "Footprint" "ARC210:RotarySwitch_P-H397_1P8T"
 			(at 110.49 -40.64 0)
 			(hide yes)
 			(show_name no)
@@ -8368,7 +8368,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Local:RotarySwitch_P-H397_1P8T"
+		(property "Footprint" "ARC210:RotarySwitch_P-H397_1P8T"
 			(at 194.31 -41.91 0)
 			(hide yes)
 			(show_name no)
@@ -9734,7 +9734,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 191.77 101.6 270)
+		(at 191.77 100.33 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9745,7 +9745,7 @@
 		(fields_autoplaced yes)
 		(uuid "c5e74535-61be-40ec-b15a-f56eea67127b")
 		(property "Reference" "R19"
-			(at 191.77 95.25 90)
+			(at 191.77 93.98 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9755,7 +9755,7 @@
 			)
 		)
 		(property "Value" "10K"
-			(at 191.77 97.79 90)
+			(at 191.77 96.52 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9765,7 +9765,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 191.77 99.822 90)
+			(at 191.77 98.552 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9776,7 +9776,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 101.6 0)
+			(at 191.77 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9787,7 +9787,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 191.77 101.6 0)
+			(at 191.77 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
